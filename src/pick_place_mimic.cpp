@@ -10,15 +10,15 @@ const double tau = 2 * M_PI;
 void openGripper(trajectory_msgs::JointTrajectory& posture)
 {
   
-    posture.joint_names.resize(2);
+    posture.joint_names.resize(1);
     posture.joint_names[0] = "gripper_right_joint";
-    posture.joint_names[1] = "gripper_left_joint";
+    //posture.joint_names[1] = "gripper_left_joint";
 
     /* Set them as open, wide enough for the object to fit. */
     posture.points.resize(1);
-    posture.points[0].positions.resize(2);
+    posture.points[0].positions.resize(1);
     posture.points[0].positions[0] = 0;
-    posture.points[0].positions[1] = 0;
+    //posture.points[0].positions[1] = 0;
     posture.points[0].time_from_start = ros::Duration(0.5);
 
 }
@@ -27,15 +27,15 @@ void openGripper(trajectory_msgs::JointTrajectory& posture)
 void closedGripper(trajectory_msgs::JointTrajectory& posture)
 {
 
-    posture.joint_names.resize(2);
+    posture.joint_names.resize(1);
     posture.joint_names[0] = "gripper_right_joint";
-    posture.joint_names[1] = "gripper_left_joint";
+    //posture.joint_names[1] = "gripper_left_joint";
 
     /* Set them as open, wide enough for the object to fit. */
     posture.points.resize(1);
-    posture.points[0].positions.resize(2);
-    posture.points[0].positions[0] = 0.055;
-    posture.points[0].positions[1] = -0.055;
+    posture.points[0].positions.resize(1);
+    posture.points[0].positions[0] = 0.051;
+    //posture.points[0].positions[1] = -0.051;
     posture.points[0].time_from_start = ros::Duration(0.5);
 
 
@@ -149,8 +149,7 @@ void place(moveit::planning_interface::MoveGroupInterface& group)
     
     place_location[0].place_pose.pose.position.x = 0;
     place_location[0].place_pose.pose.position.y = 1;
-    //place_location[0].place_pose.pose.position.z = 0.5;
-    place_location[0].place_pose.pose.position.z = 0.6;
+    place_location[0].place_pose.pose.position.z = 0.5;
 
     // Setting pre-place approach
     place_location[0].pre_place_approach.direction.header.frame_id = "base_link";

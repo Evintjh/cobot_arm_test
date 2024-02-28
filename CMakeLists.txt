@@ -16,6 +16,10 @@ find_package(catkin REQUIRED COMPONENTS
   pluginlib
   roscpp
   std_msgs
+  pcl_conversions
+  pcl_ros
+  roscpp
+  sensor_msgs
 )
 
 ## System dependencies are found with CMake's conventions
@@ -183,6 +187,11 @@ target_link_libraries(pick_and_place_cobot_node ${catkin_LIBRARIES})
 add_executable(pick_and_place_gazebo_node src/pick_place_gazebo.cpp)
 add_dependencies(pick_and_place_gazebo_node ${cobot_test_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 target_link_libraries(pick_and_place_gazebo_node ${catkin_LIBRARIES})
+
+add_executable(pick_and_place_mimic_node src/pick_place_mimic.cpp)
+add_dependencies(pick_and_place_mimic_node ${cobot_test_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+target_link_libraries(pick_and_place_mimic_node ${catkin_LIBRARIES})
+
 
 #############
 ## Install ##
