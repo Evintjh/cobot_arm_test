@@ -25,7 +25,7 @@ int main(int argc, char **argv)
     robot_model::RobotModelPtr kinematic_model = robot_model_loader.getModel();
     planning_scene::PlanningScene planning_scene(kinematic_model);
 
-    // Collision Checking
+    // Collision Checking: Sends service request to check if it will collide w itself
     collision_detection::CollisionRequest collision_request;
     collision_detection::CollisionResult collision_result;
     planning_scene.checkSelfCollision(collision_request, collision_result);
@@ -34,7 +34,7 @@ int main(int argc, char **argv)
 
 
 
-    // Get the current state of the robot
+    // Get the current state of the robot: To check if it's possible to reach a certain joint angle, which is decided by urdf file
     robot_state::RobotState& current_state = planning_scene.getCurrentStateNonConst();
 
     std::vector<double> joint_values ={0, 0 , 3.14, 0, 0, 0};
@@ -44,7 +44,8 @@ int main(int argc, char **argv)
     ROS_INFO_STREAM("Test 2: Current state is " << (current_state.satisfiesBounds(joint_model_group) ? "valid" : "not valid"));
     
     
-    // Information on the links that are colliding between each others
+    // Information on the links that are colliding between each others: only tells you if final pos has 
+    // collision, doesn't warn you about collisions along the way
     collision_request.contacts = true;
     collision_request.max_contacts = 1000;
 
@@ -58,7 +59,8 @@ int main(int argc, char **argv)
     for(it = collision_result.contacts.begin();
         it != collision_result.contacts.end();
         ++it)
-    {
+    {   
+        // tells you all the contacts between two links, eg. link2 & link4, link3 & link5
         ROS_INFO("Test 4 . Contact between: %s and %s",
                 it->first.first.c_str(),
                 it->first.second.c_str());

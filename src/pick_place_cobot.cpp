@@ -71,6 +71,9 @@ void closedGripper(trajectory_msgs::JointTrajectory& posture)
 
 void pick(moveit::planning_interface::MoveGroupInterface& move_group)
 {
+    // // Set the end-effector link for the pick operation
+    // move_group.setEndEffectorLink("robot_eef");
+
     std::vector<moveit_msgs::Grasp> grasps;
     grasps.resize(1);
 
@@ -123,17 +126,18 @@ void pick(moveit::planning_interface::MoveGroupInterface& move_group)
     grasps[0].post_grasp_retreat.desired_distance = 0.25;
 
 
-
+    // sets the posture for the gripper to open when it reaches the target position.
     // we need to open the gripper. We will define a function for that
     openGripper(grasps[0].pre_grasp_posture);
 
+    // sets the posture for the gripper to close when it reaches the target position.
     // When it grasps it needs to close the gripper
     closedGripper(grasps[0].grasp_posture);
 
     // Set support surface as table 1
     move_group.setSupportSurfaceName("table1");
 
-    // Call pick to pick up the object using the grasps given
+     // Call pick to pick up the object using the grasps given
     move_group.pick("object", grasps);
 
     
@@ -141,6 +145,9 @@ void pick(moveit::planning_interface::MoveGroupInterface& move_group)
 
 void place(moveit::planning_interface::MoveGroupInterface& group)
 {
+    //     // Set the end-effector link for the pick operation
+    // group.setEndEffectorLink("robot_eef");
+
     std::vector<moveit_msgs::PlaceLocation> place_location;
     place_location.resize(1);
 
